@@ -1,6 +1,5 @@
 #!/usr/local/bin/python3
 
-import math
 import sys
 
 def fibonacci(n):
