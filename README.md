@@ -1,0 +1,1 @@
+For my new job at Karolinska Institutet, I will have to pick up a couple of different programming languages. This repository consists of exercises where I pick some very simple problem and then try to solve it in Python, R, PHP and bash.
