@@ -2,10 +2,14 @@
 
 function isprime($n) {
     $found_divisor = false;
-    for ($i = 2; $i <= sqrt($n); $i++) {
-        $found_divisor = ($found_divisor or $n % $i == 0);
+    if ($n <= 1) {
+        return false;
+    } else {
+        for ($i = 2; $i <= sqrt($n); $i++) {
+            $found_divisor = ($found_divisor or $n % $i == 0);
+        }
+        return !$found_divisor;
     }
-    return !$found_divisor;
 }
 
 function verbose_answer($n) {
