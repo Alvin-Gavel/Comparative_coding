@@ -38,7 +38,7 @@ mandelbrot <- function(x_steps, y_steps, iterations) {
           zi1_re <- zi_re^2 - zi_im^2 + re
           zi1_im <- 2 * zi_re * zi_im + im
           
-          diverged <- (zi1_re * zi1_re + zi1_im * zi1_im > 4)
+          diverged <- (zi1_re^2 + zi1_im^2 > 4)
           
           complex_plane[[x_pos]][[y_pos]][[3]] <- zi1_re
           complex_plane[[x_pos]][[y_pos]][[4]] <- zi1_im
