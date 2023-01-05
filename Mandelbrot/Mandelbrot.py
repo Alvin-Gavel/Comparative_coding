@@ -3,7 +3,7 @@ import sys
 
 def mandelbrot(x_steps, y_steps, iterations):
    
-   min_x = -2
+   min_x = -2.0
    max_x = 0.5
    span_x = max_x - min_x
    step_x = span_x / (x_steps - 1)

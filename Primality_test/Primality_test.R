@@ -6,16 +6,16 @@ isprime <- function(n) {
     return(FALSE)
   } else if (n == 2) {
     return(TRUE)
-  } else{
+  } else {
     for (i in 2:ceiling(sqrt(n))) {
-      found_divisor = found_divisor | n %% i == 0
+      found_divisor <- found_divisor | n %% i == 0
     }
     return(!found_divisor)
   }
 }
 
 verbose_answer <- function(wasit) {
-  str_not = if (wasit) '' else 'not '
+  str_not <- if (wasit) '' else 'not '
   cat(paste0(n, " is ", str_not, "prime\n"))
 }
 
