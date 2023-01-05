@@ -3,7 +3,7 @@
 test_all() {
   directory_path=$1
   file_regex=$2
-  argument=$3
+  arguments=${@:3}
 
   languages=('python' 'R' 'php' 'bash')
   declare -A regexen=( ['python']='.*\.py' ['R']='.*\.R' ['php']='.*\.php' ['bash']='.*\.sh' )
@@ -19,11 +19,11 @@ test_all() {
         if [[ $filename =~ ${regexen[$language]} ]]
         then
           echo $"Testing $language script:"
-          ${run_commands[$language]} $filename $argument
+          ${run_commands[$language]} $filename $arguments
         fi
       done
     fi
   done
 }
 
-test_all $1 $2 $3
+test_all $1 $2 ${@:3}
