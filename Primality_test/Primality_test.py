@@ -13,10 +13,10 @@ def isprime(n):
          found_divisor = found_divisor or n % i == 0
       return not(found_divisor)
 
-def verbose_answer(wasit):
+def verbose_answer(n):
+   wasit = isprime(n)
    str_not = '' if wasit else ' not' 
    print("{} is{} prime".format(n, str_not))
    return
 
-n = int(sys.argv[1])
-verbose_answer(isprime(n))
+verbose_answer(int(sys.argv[1]))
