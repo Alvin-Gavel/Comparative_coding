@@ -1,1 +1,1 @@
-Code that prints out the Mandelbrot set.
+Code that prints out the Mandelbrot set. To test them all, run `bash Test_all.sh x y n`, where `x` is the desired number of steps along the real axis, `y` is the desired number of steps along the imaginary axis, and `n` is the number of iterations to calculate before assuming that a point converges in the limit of infinitely many iterations.
