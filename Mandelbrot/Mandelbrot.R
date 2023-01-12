@@ -14,10 +14,10 @@ mandelbrot <- function(x_steps, y_steps, iterations) {
    
    complex_plane <- list()
    for (x_pos in 1:x_steps) {
-      re <- min_x + x_pos * step_x
+      re <- min_x + (x_pos - 1) * step_x
       column <- list()
       for (y_pos in 1:y_steps) {
-         im <- min_y + y_pos * step_y
+         im <- min_y + (y_pos - 1) * step_y
          column <- append(column, list(list(re, im, re, im, FALSE)), y_pos)
       }
       complex_plane <- append(complex_plane, list(column), x_pos)
