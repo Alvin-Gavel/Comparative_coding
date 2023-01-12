@@ -3,14 +3,11 @@
 
 mandelbrot <- function(x_steps, y_steps, iterations) {
    
-  
    min_x <- -2.0
    max_x <- 0.5
-   span_x <- max_x - min_x
    
    min_y <- -1.2
    max_y <- 1.2
-   span_y <- max_y - min_y
    
    real_axis <- seq(from = min_x, to = max_x, length.out = x_steps)
    imag_axis <- seq(from = min_y, to = max_y, length.out = y_steps)
@@ -18,7 +15,6 @@ mandelbrot <- function(x_steps, y_steps, iterations) {
                             imag = rep(imag_axis, times = x_steps, each = 1))
    complex_plane <- matrix(complex_plane_temp, x_steps, y_steps)
    Z <- matrix(complex_plane_temp, x_steps, y_steps)
-  # diverged <- boolean() # Fix
    
    for (i in 1:iterations) { 
        Z <- Z^2 + complex_plane
