@@ -1,1 +1,44 @@
 Code that prints out the Mandelbrot set. To test them all, run `bash Test_all.sh x y n`, where `x` is the desired number of steps along the real axis, `y` is the desired number of steps along the imaginary axis, and `n` is the number of iterations to calculate before assuming that a point converges in the limit of infinitely many iterations. It is recommended to pick an odd value of `y`, so that the real axis is included in the plot.
+
+For example, the values 51, 51, 100 should produce the following, with a bit more leading and trailing empty lines:
+```
+                   
+                                      *            
+                                     **            
+                                    ****           
+                                    ****           
+                                     **            
+                                 *********         
+                              * ************       
+                              *****************    
+                             *****************     
+                            *******************    
+                            ********************   
+                           **********************  
+                          **********************   
+                 * ***    **********************   
+                 *******  **********************   
+                ********* **********************   
+                ********* **********************   
+              * ********* *********************    
+**********************************************     
+              * ********* *********************    
+                ********* **********************   
+                ********* **********************   
+                 *******  **********************   
+                 * ***    **********************   
+                          **********************   
+                           **********************  
+                            ********************   
+                            *******************    
+                             *****************     
+                              *****************    
+                              * ************       
+                                 *********         
+                                     **            
+                                    ****           
+                                    ****           
+                                     **            
+                                      *            
+                                                   
+```
