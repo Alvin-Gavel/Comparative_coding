@@ -68,12 +68,12 @@ Test_all.sh [argument]
 \end{lstlisting}
 Samtliga skript i mappen körs då med de givna argumenten, och borde ge exakt samma respons.
 
-I vissa fall har jag skrivit ett par extra skript: De vanliga skripten har jag försökt göra så lika varandra som möjligt, för att det ska vara lätt att jämföra koden. I vissa fall har det krävt att jag gjort saker på onödigt bökiga sätt eftersom jag hållit mig till de konstruktioner som finns i de flesta språk. Ibland har jag därför lagt till ett skript med namnet \verb+Foo_optimised.x+ som drar bättre nytta av olika behändiga konstruktioner som är kännetecknande för just det språket.
+I vissa fall har jag skrivit ett par extra skript: De vanliga skripten har jag försökt göra så lika varandra som möjligt, för att det ska vara lätt att jämföra koden. I vissa fall har det krävt att jag gjort saker på onödigt bökiga sätt eftersom jag hållit mig till de konstruktioner som finns i de flesta språk. Ibland har jag därför lagt till ett skript med namnet \verb+Foo_optimised.x+ som drar bättre nytta av olika behändiga konstruktioner som är kännetecknande för just det språket. Ibland har jag istället lagt till ett skript med namnet \verb+Foo_using_bar.x+ där \verb+bar+ är något vanligt bibliotek som man verkligen borde använda i sammanhanget.
 
 
 \newpage
 \section{Fibonacci}
-Den första övningen var att skriva en funktion som givet talet $n$ skriver ut fibonaccitalet $F_n$, alltså de tal som defineras genom
+Den första övningen var att skriva funktioner som givet ett tal $n$ skriver ut fibonaccitalet $F_n$, alltså de tal som defineras genom
 \begin{align}
 F_1 &= 1 \\
 F_2 &= 1 \\
@@ -181,5 +181,149 @@ fibonacci() {
 fibonacci $1
 \end{lstlisting}
 Lösningen ser ungefär likadan ut som i de andra språken, men någonting som inte framgår är hur kinkigt språket är. Tillexempel gör det i Python ingen skillnad om man skriver \verb+foo = 1+ eller \verb+foo=1+. bash däremot kräver att variabeltilldelningen sker utan några mellanslag. Den kräver också dubbla parenteser runt beräkningen av $F_n + F_{n-1}$.
+
+\newpage
+\section{Primtalstest}
+Den andra övningen var att skriva funktioner som givet ett tal $n$ testar om talet är ett primtal och sedan skriver ut svaret i form av en fullständig mening. Som primtalstestningsalgoritm använder vi Eratosthenes såll. Det vill säga att vi testar att dividera med alla heltal som skulle kunna vara delare.
+
+\subsection{Python}
+Den enklaste tänkbara lösningen finns i \verb+Primality_test.py+:
+\begin{lstlisting}[language=python]
+#!/usr/local/bin/python3
+import sys
+
+def isprime(n):
+   found_divisor = False
+   if n <= 1:
+      return False
+   elif n == 2:
+      return True
+   else:
+      for i in range(2, n):
+         found_divisor = found_divisor or n % i == 0
+      return not(found_divisor)
+
+def verbose_answer(n):
+   wasit = isprime(n)
+   str_not = '' if wasit else ' not' 
+   print("{} is{} prime".format(n, str_not))
+   return
+
+verbose_answer(int(sys.argv[1]))
+\end{lstlisting}
+Det är dock inte helt optimalt att vi testar att dela med alla heltal upp till och med $n-1$. Vi vet ju att om vi tagit oss upp till $\sqrt{n}$ utan att hitta någon delare, då kommer inget tal större än så att vara en delare heller. I kodfilen \verb+Primality_test_using_math.py+ använder jag biblioteket \verb+math+ som innehåller en kvadratrotsfunktion. Funktionen \verb+isprime+ får då detta utseende:
+\begin{lstlisting}[language=python]
+import math
+
+def isprime(n):
+   found_divisor = False
+   if n <= 1:
+      return False
+   elif n == 2:
+      return True
+   else:
+      for i in range(2, int(math.ceil((math.sqrt(n)))) + 1):
+         found_divisor = found_divisor or n % i == 0
+      return not(found_divisor)
+\end{lstlisting}
+
+\newpage
+\subsection{R}
+Lösningen i R kräver inte att vi importerar något särskilt bibliotek, eftersom språket är skrivet av och för matematiker och kvadratrotsfunktionen därför redan finns bland standardfunktionerna.
+\begin{lstlisting}[language=R]
+#!/usr/bin/env Rscript
+
+isprime <- function(n) {
+   found_divisor = FALSE
+   if (n <= 1) {
+      return(FALSE)
+   } else if (n == 2) {
+      return(TRUE)
+   } else {
+      for (i in 2:ceiling(sqrt(n))) {
+         found_divisor <- found_divisor | n %% i == 0
+      }
+      return(!found_divisor)
+   }
+}
+
+verbose_answer <- function(n) {
+   wasit <- isprime(n)
+   str_not <- if (wasit) '' else 'not '
+   cat(paste0(n, " is ", str_not, "prime\n"))
+}
+
+n <- as.numeric(commandArgs(trailingOnly=TRUE)[1])
+verbose_answer(n)
+\end{lstlisting}
+
+\newpage
+\subsection{PHP}
+Lösningen för PHP ser ungefär likadan ut som den i R:
+\begin{lstlisting}[language=PHP]
+<?php
+
+function isprime($n) {
+   $found_divisor = false;
+   if ($n <= 1) {
+      return false;
+   } else {
+      for ($i = 2; $i <= sqrt($n); $i++) {
+         $found_divisor = ($found_divisor or $n % $i == 0);
+      }
+      return !$found_divisor;
+   }
+}
+
+function verbose_answer($n) {
+   $wasit = isprime($n);
+   $wasit ? $str_not = '' : $str_not = ' not';
+   echo "$n is$str_not prime\n";
+}
+
+verbose_answer($argv[1]);
+?>
+\end{lstlisting}
+Den enda väsentliga skillnaden syns i forloopen: I R itererar vi över en lista med värden, och när den listan definieras så krävs \verb+ceiling+-funktionen för att göra den övre gränsen till ett heltal. I PHP så räcker det med att specificera att indexet måste vara under ett visst värde.
+
+\newpage
+\subsection{bash}
+I min lösning i bash har jag inte ens vågat mig på att försöka beräkna en kvadratrot. Det går säkert att göra, men språket är inte till för att göra någon form av beräkningar. Istället blir lösningen ekvivalent med den första av Python-lösningarna:
+\begin{lstlisting}[language=bash]
+#!/usr/bin/env bash
+
+isprime() {
+  n=$1
+  local found_divisor=false
+  if (($n <= 1))
+  then
+    echo "0"
+  elif [ $n == 2 ]
+  then
+    echo "1"
+  else
+    for i in $(seq 2 $[$n-1])
+    do
+      found_divisor=$[$found_divisor || $[$[$n % $i] == 0]]
+    done
+    echo "$[! $found_divisor]"
+  fi
+}
+
+verbose_answer() {
+  n=$1
+  local wasit=$(isprime $n)
+  if [ $wasit == 1 ]
+  then
+    local str_not=''
+  else
+    local str_not=' not'
+  fi
+  echo "${n} is${str_not} prime"
+}
+
+verbose_answer $1
+\end{lstlisting}
+
 
 \end{document}
