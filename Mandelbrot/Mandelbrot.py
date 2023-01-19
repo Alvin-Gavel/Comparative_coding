@@ -50,7 +50,8 @@ def mandelbrot(x_steps, y_steps, iterations):
             row += ' '
          else:
             row += '*'
-      print(row)
+      if '*' in row:
+         print(row)
    return
 
 x_steps = int(sys.argv[1])
