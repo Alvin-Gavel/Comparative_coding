@@ -11,6 +11,5 @@ fibonacci <- function(n) {
    cat(F_nm1, '\n')
 }
 
-args <- commandArgs(trailingOnly=TRUE)
-n <- args[1]
+n <- commandArgs(trailingOnly=TRUE)[1]
 fibonacci(n)
