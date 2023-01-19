@@ -20,6 +20,5 @@ verbose_answer <- function(n) {
    cat(paste0(n, " is ", str_not, "prime\n"))
 }
 
-args <- commandArgs(trailingOnly=TRUE)
-n <- as.numeric(args[1])
+n <- as.numeric(commandArgs(trailingOnly=TRUE)[1])
 verbose_answer(n)
