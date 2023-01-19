@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3
 import sys
+import math
 
 def isprime(n):
    found_divisor = False
@@ -8,7 +9,7 @@ def isprime(n):
    elif n == 2:
       return True
    else:
-      for i in range(2, n):
+      for i in range(2, int(math.ceil((math.sqrt(n)))) + 1):
          found_divisor = found_divisor or n % i == 0
       return not(found_divisor)
 
