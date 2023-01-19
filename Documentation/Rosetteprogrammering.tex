@@ -1,0 +1,185 @@
+\documentclass[10pt, twoside,a4paper]{article}
+%\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+%\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+%\usepackage[applemac]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+\usepackage[swedish]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{listings}
+\usepackage[table]{xcolor}
+\usepackage{tabu}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+ % postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\usepackage{units}
+\usepackage{wasysym}
+%\usepackage{mathabx}
+\usepackage[font={small},labelfont=bf,belowskip=2mm,aboveskip=1mm]{caption}
+\usepackage{geometry}
+\usepackage{multirow}
+\usepackage{leftidx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{csquotes}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,positioning,shapes}
+%\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%\allowdisplaybreaks[2]
+
+\lstset{
+  literate={ö}{{\"o}}1
+           {ä}{{\"a}}1
+           {ü}{{\"u}}1
+}
+
+
+\title{Rosetteprogrammering}
+\author{Alvin Gavel}
+\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+\noindent
+Som en del av mitt nya jobb på KIB så kommer jag att behöva lära mig ett par nya programspråk. De mest brådskande är \emph{R} och \emph{PHP}, men även \emph{bash} kommer säkert visa sig bra att kunna. Som övning har jag bestämt mig för att välja ut ett par enkla programmeringsövningar och försöka lösa dem först i \emph{Python}, som jag redan kan, och sedan i de tre andra språken. Jag lägger upp resultaten av övningarna allteftersom på Github i repositoriet \url{https://github.com/Alvin-Gavel/Comparative_coding}.
+
+För varje övning finns en mapp med namnet \verb+Foo+ som innehåller bland skript med namn av formen \verb+Foo.xy+, där \verb+xy+ är den typiska filändelsen för programspråket i fråga. Vart och ett av dem går att köra med något av:
+\begin{lstlisting}[language=bash]
+python Foo.py [argument]
+Rscript Foo.R [argument]
+php Foo.php [argument]
+bash foo.sh [argument]
+\end{lstlisting}
+där \verb+[argument]+ är indata specifika för funktionen.
+
+För att göra det hela snabbare så finns även ett skript som heter \verb+Test_all.sh+ som kör allihopa med samma argument:
+\begin{lstlisting}[language=bash]
+Test_all.sh [argument]
+\end{lstlisting}
+Samtliga skript i mappen körs då med de givna argumenten, och borde ge exakt samma respons.
+
+I vissa fall har jag skrivit ett par extra skript: De vanliga skripten har jag försökt göra så lika varandra som möjligt, för att det ska vara lätt att jämföra koden. I vissa fall har det krävt att jag gjort saker på onödigt bökiga sätt eftersom jag hållit mig till de konstruktioner som finns i de flesta språk. Ibland har jag därför lagt till ett skript med namnet \verb+Foo_optimised.x+ som drar bättre nytta av olika behändiga konstruktioner som är kännetecknande för just det språket.
+
+
+\newpage
+\section{Fibonacci}
+Den första övningen var att skriva en funktion som givet talet $n$ skriver ut fibonaccitalet $F_n$, alltså de tal som defineras genom
+\begin{align}
+F_1 &= 1 \\
+F_2 &= 1 \\
+F_n &= F_{n-1} + F_{n-2}, \hspace{1cm}(n > 2).
+\end{align}
+Lite godtyckligt bestämde jag att funktionerna ska ge 1 som svar på alla $n < 1$.
+
+\subsection{Python}
+I filen \verb+Fibonacci.py+ har jag implementerat den här ganska generella lösningen: 
+\begin{lstlisting}[language=python]
+#!/usr/local/bin/python3
+import sys
+
+def fibonacci(n):
+   F_n = 1
+   F_nm1 = 0
+   for i in range(n):
+     F_old = F_n
+     F_n = F_n + F_nm1
+     F_nm1 = F_old
+   print(F_nm1)
+   return
+
+n = int(sys.argv[1])
+fibonacci(n)
+\end{lstlisting}
+Denna lösning drar dock inte nytta av en fiffig egenskap hos Python. Det går att göra flera variabeldefinitioner på samma rad, och man kan ibland utnyttja det för att slippa krångel med temporära variabler. Tillexempel så är det möjligt att låta variablerna \verb+foo+ och \verb+bar+ byta värden genom att helt enkelt skriva \verb+foo, bar = bar, foo+. Vi kan alltså korta ner lösningen ovan till den lite smidigare versionen i \verb+Fibonacci_optimised.py+:
+\begin{lstlisting}[language=python]
+#!/usr/local/bin/python3
+import sys
+
+def fibonacci(n):
+   F_n = 1
+   F_nm1 = 0
+   for i in range(n):
+     F_n, F_nm1 = F_n + F_nm1, F_n
+   print(F_nm1)
+   return
+
+n = int(sys.argv[1])
+fibonacci(n)
+\end{lstlisting}
+
+\newpage
+\subsection{R}
+Lösningen i R är nästan helt identisk med den första av lösningarna i Python. 
+\begin{lstlisting}[language=R]
+#!/usr/bin/env Rscript
+
+fibonacci <- function(n) {
+   F_n <- 1
+   F_nm1 <- 0
+   for (i in 1:n) {
+      F_old <- F_n
+      F_n <- F_n + F_nm1
+      F_nm1 <- F_old
+   }
+   cat(F_nm1, '\n')
+}
+
+n <- commandArgs(trailingOnly=TRUE)[1]
+fibonacci(n)
+\end{lstlisting}
+Den enda rad i Python-koden som inte har en direkt motsvarighet i R-koden är returnsatsen i slutet på funktionsdefinitionen, och det är mest en stilfråga. Det skulle gå att ta bort returnsatsen ur Python-koden och den skulle fortfarande gå att köra, och det skulle gå att lägga till en tom returnsats till R-koden.
+
+\subsection{PHP}
+Även PHP ser ungefär likadant ut som Python. Den mest synbara skillnaden är mängden dollartecken och semikolon som dykt upp. Man kan också se att forloopen är mer explicit med när den ska ta slut och vad som sker med indexet i varje iteration. Det gör å ena sidan språket lite mer flexibelt, men samtidigt att det blir lite mer långrandigt.
+\begin{lstlisting}[language=PHP]
+<?php
+
+function fibonacci($n) {
+   $F_n = 1;
+   $F_nm1 = 0;
+   for ($i = 0; $i < $n; $i++) {
+     $F_old = $F_n;
+     $F_n = $F_n + $F_nm1;
+     $F_nm1 = $F_old;
+   }
+   echo "$F_nm1\n";
+}
+
+fibonacci($argv[1]);
+?>
+\end{lstlisting}
+
+\newpage
+\subsection{bash}
+Tillsist löser vi problemet i bash.
+\begin{lstlisting}[language=bash]
+#!/usr/bin/env bash
+
+fibonacci() {
+  n=$1
+  local F_n=1
+  local F_nm1=0
+  for i in $(seq 1 $n)
+  do
+    F_old=$F_n
+    F_n=$(($F_n+$F_nm1))
+    F_nm1=$F_old
+  done
+  echo $F_nm1
+}
+
+fibonacci $1
+\end{lstlisting}
+Lösningen ser ungefär likadan ut som i de andra språken, men någonting som inte framgår är hur kinkigt språket är. Tillexempel gör det i Python ingen skillnad om man skriver \verb+foo = 1+ eller \verb+foo=1+. bash däremot kräver att variabeltilldelningen sker utan några mellanslag. Den kräver också dubbla parenteser runt beräkningen av $F_n + F_{n-1}$.
+
+\end{document}
