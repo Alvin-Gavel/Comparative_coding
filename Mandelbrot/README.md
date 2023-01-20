@@ -42,3 +42,5 @@ For example, the values `x` = 101, `y` = 51, `n` = 100 should produce the follow
                                                                            **         
                                                    
 ```
+
+I have not attempted to solve this problem in bash, since it lacks support for floating-point arithmetic.
