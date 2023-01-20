@@ -27,18 +27,25 @@
 \noindent
 Som en del av mitt nya jobb på KIB så kommer jag att behöva lära mig ett par nya programspråk. De mest brådskande är \emph{R} och \emph{PHP}, men även \emph{bash} kommer säkert visa sig bra att kunna. Som övning har jag bestämt mig för att välja ut ett par enkla programmeringsövningar och försöka lösa dem först i \emph{Python}, som jag redan kan, och sedan i de tre andra språken. Jag lägger upp resultaten av övningarna allteftersom på Github i repositoriet \url{https://github.com/Alvin-Gavel/Comparative_coding}.
 
-För varje övning finns en mapp med namnet \verb+Foo+ som innehåller bland skript med namn av formen \verb+Foo.xy+, där \verb+xy+ är den typiska filändelsen för programspråket i fråga. Vart och ett av dem går att köra med något av:
+För varje övning finns en mapp med namnet \verb+Foo+ som innehåller bland skript med namn av formen \verb+Foo.xy+, där \verb+xy+ är den typiska filändelsen för programspråket i fråga. Givet att du har python installerat så kan python-skripten göras med att i terminalen skriva in
 \begin{lstlisting}[language=bash]
-python Foo.py [argument]
-Rscript Foo.R [argument]
-php Foo.php [argument]
-bash foo.sh [argument]
+python Foo.py x y z
 \end{lstlisting}
-där \verb+[argument]+ är indata specifika för funktionen.
-
+där \verb+x+, \verb+y+ och \verb+z+ är argumenten som krävs av funktionen i fråga. På samma sätt kan R-skripten köras med
+\begin{lstlisting}[language=bash]
+Rscript Foo.R x y z
+\end{lstlisting}
+och PHP-skripten med 
+\begin{lstlisting}[language=bash]
+php Foo.php x y z
+\end{lstlisting}
+Att köra bash-skripten kan bli knepigare, men i bästa fall går det med
+\begin{lstlisting}[language=bash]
+bash foo.sh x y z
+\end{lstlisting}
 För att göra det hela snabbare så finns även ett skript som heter \verb+Test_all.sh+ som kör allihopa med samma argument:
 \begin{lstlisting}[language=bash]
-Test_all.sh [argument]
+Test_all.sh x y z
 \end{lstlisting}
 Samtliga skript i mappen körs då med de givna argumenten, och borde ge exakt samma respons.
 
