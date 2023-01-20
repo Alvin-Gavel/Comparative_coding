@@ -17,8 +17,8 @@ mandelbrot <- function(x_steps, y_steps, iterations) {
    Z <- matrix(complex_plane_temp, x_steps, y_steps)
    
    for (i in 1:iterations) { 
-       Z <- Z^2 + complex_plane
-       diverged <- (abs(Z) > 4)
+      Z <- Z^2 + complex_plane
+      diverged <- (abs(Z) > 4)
      }
    
    for (y_pos in 1:y_steps) {
@@ -30,8 +30,10 @@ mandelbrot <- function(x_steps, y_steps, iterations) {
             row <- paste(row, "*", sep="")
          }
       }
-      row <- paste(row, "\n", sep="")
-      cat(row)
+      if (grepl('*', row, fixed = TRUE)) {
+         row <- paste(row, "\n", sep="")
+         cat(row)
+      }
    }
 }
 

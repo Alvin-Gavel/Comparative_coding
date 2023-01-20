@@ -57,8 +57,10 @@ mandelbrot <- function(x_steps, y_steps, iterations) {
             row <- paste(row, "*", sep="")
          }
       }
-      row <- paste(row, "\n", sep="")
-      cat(row)
+      if (grepl('*', row, fixed = TRUE)) {
+         row <- paste(row, "\n", sep="")
+         cat(row)
+      }
    }
 }
 
