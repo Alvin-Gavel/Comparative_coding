@@ -6,7 +6,7 @@ For my new job at Karolinska Institutet, I will have to pick up a couple of diff
 
 - `Fibonacci`: Scripts that given `n` calculate the `n`th Fibonacci number.
 
-- `Primality_test`: Scripts that given an integer test whether it is prime.
+- `Primality_test`: Scripts that given an integer tests whether it is prime.
 
 - `Mandelbrot`: Scripts that given dimensions `x` and `y` print out a `x` times `y` plot of the mandelbrot set.
 
