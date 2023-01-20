@@ -599,19 +599,19 @@ function mandelbrot($x_steps, $y_steps, $iterations) {
    $step_y = $span_y / ($y_steps - 1);
    
    $complex_plane = array();
-   for ($x_pos = 0; $x_pos <= $x_steps; $x_pos++) {
+   for ($x_pos = 0; $x_pos < $x_steps; $x_pos++) {
       $re = $min_x + $x_pos * $step_x;
       $column = array();
-      for ($y_pos = 0; $y_pos <= $y_steps; $y_pos++) {
+      for ($y_pos = 0; $y_pos < $y_steps; $y_pos++) {
          $im = $min_y + $y_pos * $step_y;
          $column[] = array($re, $im, $re, $im, False);
       }
       $complex_plane[] = $column;
    }
    
-   for ($x_pos = 0; $x_pos <= $x_steps; $x_pos++) {
-      for ($y_pos = 0; $y_pos <= $y_steps; $y_pos++) {
-         for ($i = 0; $i <= $iterations; $i++) { 
+   for ($x_pos = 0; $x_pos < $x_steps; $x_pos++) {
+      for ($y_pos = 0; $y_pos < $y_steps; $y_pos++) {
+         for ($i = 0; $i < $iterations; $i++) { 
             $diverged = $complex_plane[$x_pos][$y_pos][4];
             
             if (!$diverged) {
@@ -634,17 +634,19 @@ function mandelbrot($x_steps, $y_steps, $iterations) {
       }
    }
    
-   for ($y_pos = 0; $y_pos <= $y_steps; $y_pos++) {
+   for ($y_pos = 0; $y_pos < $y_steps; $y_pos++) {
       $row = '';
-      for ($x_pos = 0; $x_pos <= $x_steps; $x_pos++) {
+      for ($x_pos = 0; $x_pos < $x_steps; $x_pos++) {
          if ($complex_plane[$x_pos][$y_pos][4]) {
             $row .= " ";
          } else {
             $row .= "*";
          }
       }
-      $row .= "\n";
-      echo($row);
+      if (strpos($row, '*') !== false) {
+         $row .= "\n";
+         echo($row);
+      }
    }
 }
 
