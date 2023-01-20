@@ -2,6 +2,7 @@
 \usepackage[swedish]{babel}
 \usepackage{amsmath}
 \usepackage{listings}
+\usepackage{geometry}
 \lstset{
   basicstyle=\ttfamily,
   columns=fullflexible,
@@ -454,6 +455,8 @@ y_steps = int(sys.argv[2])
 iterations = int(sys.argv[3])
 mandelbrot(x_steps, y_steps, iterations)
 \end{lstlisting}
+Där beräkningen tidigare bestod av tre lager av forloopar som verkar på varje enskilt matriselement finns nu bara en forloop som verkar på matrisen som helhet. Vi har också lyckats korta ner steget att konstruera matrisen till att börja med.
+
 
 \newpage
 \subsection{R}
@@ -579,6 +582,8 @@ iterations <- as.numeric(args[3])
 
 mandelbrot(x_steps, y_steps, iterations)
 \end{lstlisting}
+Den är nästan identisk med den kompakta lösningen för Python. Den enda större skillnaden är att R inte har någon motsvarighet till funktionen \verb+meshgrid+ i \verb+numpy+, så vi har fåt använda \verb+rep+. (Om vi av någon anledning verkligen velat använda \verb+meshgrid+ så hade vi kunnat importera den från R-biblioteket \verb+pracma+.)
+
 
 \newpage
 \subsection{PHP}
