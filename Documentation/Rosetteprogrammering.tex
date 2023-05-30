@@ -1,46 +1,20 @@
 \documentclass[10pt, twoside,a4paper]{article}
-%\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
-%\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
-%\geometry{landscape}                % Activate for for rotated page geometry
-%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
-%\usepackage[applemac]{inputenc}
-%\usepackage[T1]{fontenc}
-%\usepackage[utf8]{inputenc}
 \usepackage[swedish]{babel}
 \usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{url}
 \usepackage{listings}
-\usepackage[table]{xcolor}
-\usepackage{tabu}
+\usepackage{geometry}
 \lstset{
   basicstyle=\ttfamily,
   columns=fullflexible,
   frame=single,
   breaklines=true,
- % postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
-\usepackage{units}
-\usepackage{wasysym}
-%\usepackage{mathabx}
-\usepackage[font={small},labelfont=bf,belowskip=2mm,aboveskip=1mm]{caption}
-\usepackage{geometry}
-\usepackage{multirow}
-\usepackage{leftidx}
-\usepackage[hidelinks]{hyperref}
-\usepackage{csquotes}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{tikz}
-\usetikzlibrary{arrows,automata,positioning,shapes}
-%\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
-%\allowdisplaybreaks[2]
-
 \lstset{
   literate={ö}{{\"o}}1
            {ä}{{\"a}}1
            {ü}{{\"u}}1
 }
+\usepackage[hidelinks]{hyperref}
 
 
 \title{Rosetteprogrammering}
@@ -53,26 +27,36 @@
 \noindent
 Som en del av mitt nya jobb på KIB så kommer jag att behöva lära mig ett par nya programspråk. De mest brådskande är \emph{R} och \emph{PHP}, men även \emph{bash} kommer säkert visa sig bra att kunna. Som övning har jag bestämt mig för att välja ut ett par enkla programmeringsövningar och försöka lösa dem först i \emph{Python}, som jag redan kan, och sedan i de tre andra språken. Jag lägger upp resultaten av övningarna allteftersom på Github i repositoriet \url{https://github.com/Alvin-Gavel/Comparative_coding}.
 
-För varje övning finns en mapp med namnet \verb+Foo+ som innehåller bland skript med namn av formen \verb+Foo.xy+, där \verb+xy+ är den typiska filändelsen för programspråket i fråga. Vart och ett av dem går att köra med något av:
+För varje övning finns en mapp med namnet \verb+Foo+ som innehåller bland skript med namn av formen \verb+Foo.xy+, där \verb+xy+ är den typiska filändelsen för programspråket i fråga. Givet att du har python installerat så kan python-skripten köras med att i terminalen skriva in
 \begin{lstlisting}[language=bash]
-python Foo.py [argument]
-Rscript Foo.R [argument]
-php Foo.php [argument]
-bash foo.sh [argument]
+python Foo.py x y z
 \end{lstlisting}
-där \verb+[argument]+ är indata specifika för funktionen.
-
+där \verb+x+, \verb+y+ och \verb+z+ är argumenten som krävs av funktionen i fråga. På samma sätt kan R-skripten köras med
+\begin{lstlisting}[language=bash]
+Rscript Foo.R x y z
+\end{lstlisting}
+och PHP-skripten med 
+\begin{lstlisting}[language=bash]
+php Foo.php x y z
+\end{lstlisting}
+Att köra bash-skripten kan bli knepigare, men i bästa fall går det med
+\begin{lstlisting}[language=bash]
+bash foo.sh x y z
+\end{lstlisting}
 För att göra det hela snabbare så finns även ett skript som heter \verb+Test_all.sh+ som kör allihopa med samma argument:
 \begin{lstlisting}[language=bash]
-Test_all.sh [argument]
+Test_all.sh x y z
 \end{lstlisting}
 Samtliga skript i mappen körs då med de givna argumenten, och borde ge exakt samma respons.
 
 I vissa fall har jag skrivit ett par extra skript: De vanliga skripten har jag försökt göra så lika varandra som möjligt, för att det ska vara lätt att jämföra koden. I vissa fall har det krävt att jag gjort saker på onödigt bökiga sätt eftersom jag hållit mig till de konstruktioner som finns i de flesta språk. Ibland har jag därför lagt till ett skript med namnet \verb+Foo_optimised.x+ som drar bättre nytta av olika behändiga konstruktioner som är kännetecknande för just det språket. Ibland har jag istället lagt till ett skript med namnet \verb+Foo_using_bar.x+ där \verb+bar+ är något vanligt bibliotek som man verkligen borde använda i sammanhanget.
 
+\newpage
+\tableofcontents
+
 
 \newpage
-\section{Fibonacci}
+\section{Fibonaccital}
 Den första övningen var att skriva funktioner som givet ett tal $n$ skriver ut fibonaccitalet $F_n$, alltså de tal som defineras genom
 \begin{align}
 F_1 &= 1 \\
@@ -140,7 +124,7 @@ fibonacci(n)
 Den enda rad i Python-koden som inte har en direkt motsvarighet i R-koden är returnsatsen i slutet på funktionsdefinitionen, och det är mest en stilfråga. Det skulle gå att ta bort returnsatsen ur Python-koden och den skulle fortfarande gå att köra, och det skulle gå att lägga till en tom returnsats till R-koden.
 
 \subsection{PHP}
-Även PHP ser ungefär likadant ut som Python. Den mest synbara skillnaden är mängden dollartecken och semikolon som dykt upp. Man kan också se att forloopen är mer explicit med när den ska ta slut och vad som sker med indexet i varje iteration. Det gör å ena sidan språket lite mer flexibelt, men samtidigt att det blir lite mer långrandigt.
+Även PHP ser ungefär likadant ut som Python. Den mest synbara skillnaden är mängden dollartecken och semikolon som dykt upp. Man kan också se att forloopen är mer explicit med när den ska ta slut och vad som sker med indexet i varje iteration. Det gör å ena sidan språket lite mer flexibelt, men samtidigt att det blir lite mer plottrigt.
 \begin{lstlisting}[language=PHP]
 <?php
 
@@ -325,5 +309,370 @@ verbose_answer() {
 verbose_answer $1
 \end{lstlisting}
 
+
+
+\newpage
+\section{Mandelbrotmängden}
+Den tredje övningen var att skriva funktioner som skriver ut mandelbrotmängden. Det vill säga, mängden av komplexa tal $c$ sådana att talföljden
+\begin{align}
+z_n &= z_{n-1}^2 + c \\
+z_1 &= c
+\end{align}
+inte divergerar när $n \to \infty$.
+
+Mandelbrotmängden är en fraktal, så det är väsentligt med vilken upplösning den skrivs ut. Alltså måste funktionerna ta dimensionerna $x$ och $y$ längs med reella resp. imaginära axeln som argument. Det finns också ingen generell metod för att avgöra om en punkt kommer att divergera, utan oftast så beräknar man för varje $c$ helt enkelt något tal $z_n$ där $n$ är hyfsat stort och antar att om $\left| z_n \right| < 2$ så är talföljden förmodligen konvergent för det talet $c$. Alltså måste funktionerna också ta antalet iterationer $n$ som argument.
+
+Det går inte riktigt att rita bilder i terminalfönster, men eftersom de brukar använda konstant teckenbredd så kan vi använda tecknen som pixlar, och låta asterisker beteckna punkterna där vi tror att talföljden är konvergent. Om vi kör någon av funktionerna med t.ex. $x= 81$, $y = 41$ och $n = 100$ så ska den skriva ut:
+\begin{lstlisting}[keepspaces=true]
+                                                           *                     
+                                                          ******                 
+                                                         *******                 
+                                                           ***       *           
+                                               **    ****************            
+                                               ****************************      
+                                              ***************************        
+                                            *******************************      
+                                           **********************************    
+                                           *********************************     
+                           ** *****      ************************************    
+                          ************   ************************************    
+                         *************** ***********************************     
+                     ** **************** **********************************      
+*************************************************************************        
+                     ** **************** **********************************      
+                         *************** ***********************************     
+                          ************   ************************************    
+                           ** *****      ************************************    
+                                           *********************************     
+                                           **********************************    
+                                            *******************************      
+                                              ***************************        
+                                               ****************************      
+                                               **    ****************            
+                                                           ***       *           
+                                                         *******                 
+                                                          ******                 
+                                                           *  
+\end{lstlisting}
+
+\newpage
+\subsection{Python}
+En lösning som bara håller sig till de grundläggande konstruktionerna i språket finns i kodfilen \verb+Mandelbrot.py+. Den är inte snygg, men den får jobbet gjort:
+\begin{lstlisting}[language=python]
+#!/usr/local/bin/python3
+import sys
+
+def mandelbrot(x_steps, y_steps, iterations):
+
+   min_x = -2.0
+   max_x = 0.5
+   span_x = max_x - min_x
+   step_x = span_x / (x_steps - 1)
+
+   min_y = -1.2
+   max_y = 1.2
+   span_y = max_y - min_y
+   step_y = span_y / (y_steps - 1)
+
+   complex_plane = []
+   for x_pos in range(x_steps):
+      re = min_x + x_pos * step_x
+      column = []
+      for y_pos in range(y_steps):
+         im = min_y + y_pos * step_y
+         column.append([re, im, re, im, False])
+      complex_plane.append(column)
+
+   for x_pos in range(x_steps):
+      for y_pos in range(y_steps):
+         for i in range(iterations):
+            diverged = complex_plane[x_pos][y_pos][4]
+            
+            if not diverged:
+               re = complex_plane[x_pos][y_pos][0]
+               im = complex_plane[x_pos][y_pos][1]
+
+               zi_re = complex_plane[x_pos][y_pos][2]
+               zi_im = complex_plane[x_pos][y_pos][3]
+
+               zi1_re = zi_re**2 - zi_im**2 + re
+               zi1_im = 2 * zi_re * zi_im + im
+
+               diverged = zi1_re**2 + zi1_im**2 > 4
+
+               complex_plane[x_pos][y_pos][2] = zi1_re
+               complex_plane[x_pos][y_pos][3] = zi1_im
+               complex_plane[x_pos][y_pos][4] = diverged
+
+   for y_pos in range(y_steps):
+      row = ''
+      for x_pos in range(x_steps):
+         if complex_plane[x_pos][y_pos][4]:
+            row += ' '
+         else:
+            row += '*'
+      if '*' in row:
+         print(row)
+   return
+
+x_steps = int(sys.argv[1])
+y_steps = int(sys.argv[2])
+iterations = int(sys.argv[3])
+mandelbrot(x_steps, y_steps, iterations)
+\end{lstlisting}
+Det finns flera saker som gör den här lösningen osnygg, men de flesta av dem har sin grund i att vi bygger upp det komplexa talplanet som en lista med listor med listor. Vi skulle kunna snygga till det lite om vi använda språkets inbyggda stöd för komplexa tal. Vi skulle kunna göra det mycket snyggare om vi också hade stöd för matrisaritmetik. Vi får detta om vi importerar modulen \verb+numpy+. Den innehåller en stor mängd användbara funktioner, och bör användas varje gång man gör någonting som är det minsta matematiskt komplicerat. I kodfilen \verb+Mandelbrot_using_numpy.py+ har vi den här mycket mer kompakta lösningen:
+\begin{lstlisting}[language=python]
+#!/usr/local/bin/python3
+import sys
+
+import numpy as np
+
+def mandelbrot(x_steps, y_steps, iterations):
+
+   min_x = -2.0
+   max_x = 0.5
+
+   min_y = -1.2
+   max_y = 1.2
+   
+   real_axis = np.linspace(min_x, max_x, x_steps)
+   imag_axis = np.linspace(min_y, max_y, y_steps)
+
+   real_coords, imag_coords = np.meshgrid(real_axis, imag_axis)
+   complex_plane = real_coords + 1j * imag_coords
+   Z = real_coords + 1j * imag_coords
+
+   for i in range(iterations):
+      diverged = np.abs(Z) > 4
+      Z[~diverged] = Z[~diverged]**2 + complex_plane[~diverged]
+
+   for y_pos in range(y_steps):
+      row = ''
+      for x_pos in range(x_steps):
+         if diverged[y_pos][x_pos]:
+            row += ' '
+         else:
+            row += '*'
+      if '*' in row:
+         print(row)
+   return
+
+x_steps = int(sys.argv[1])
+y_steps = int(sys.argv[2])
+iterations = int(sys.argv[3])
+mandelbrot(x_steps, y_steps, iterations)
+\end{lstlisting}
+Där beräkningen tidigare bestod av tre lager av forloopar som verkar på varje enskilt matriselement finns nu bara en forloop som verkar på matrisen som helhet. Vi har också lyckats korta ner steget att konstruera matrisen till att börja med.
+
+
+\newpage
+\subsection{R}
+I R är situationen ungefär likadan. Det går att lösa problemet med konstruktioner som finns i alla språk, men det blir inte snyggt. Min implementering ser ut såhär:
+\begin{lstlisting}[language=R]
+#!/usr/bin/env Rscript
+
+mandelbrot <- function(x_steps, y_steps, iterations) {
+   
+   min_x <- -2.0
+   max_x <- 0.5
+   span_x <- max_x - min_x
+   step_x <- span_x / (x_steps - 1)
+   
+   min_y <- -1.2
+   max_y <- 1.2
+   span_y <- max_y - min_y
+   step_y <- span_y / (y_steps - 1)
+   
+   complex_plane <- list()
+   for (x_pos in 1:x_steps) {
+      re <- min_x + (x_pos - 1) * step_x
+      column <- list()
+      for (y_pos in 1:y_steps) {
+         im <- min_y + (y_pos - 1) * step_y
+         column <- append(column, list(list(re, im, re, im, FALSE)), y_pos)
+      }
+      complex_plane <- append(complex_plane, list(column), x_pos)
+   }
+   
+   for (x_pos in 1:x_steps) {
+      for (y_pos in 1:y_steps) {
+         for (i in 1:iterations) { 
+            diverged <- complex_plane[[x_pos]][[y_pos]][[5]]
+            
+            if (!diverged) {
+               re <- complex_plane[[x_pos]][[y_pos]][[1]]
+               im <- complex_plane[[x_pos]][[y_pos]][[2]]
+               
+               zi_re <- complex_plane[[x_pos]][[y_pos]][[3]]
+               zi_im <- complex_plane[[x_pos]][[y_pos]][[4]]
+               
+               zi1_re <- zi_re^2 - zi_im^2 + re
+               zi1_im <- 2 * zi_re * zi_im + im
+               
+               diverged <- (zi1_re^2 + zi1_im^2 > 4)
+               
+               complex_plane[[x_pos]][[y_pos]][[3]] <- zi1_re
+               complex_plane[[x_pos]][[y_pos]][[4]] <- zi1_im
+               complex_plane[[x_pos]][[y_pos]][[5]] <- diverged
+            }
+         }
+      }
+   }
+   
+   for (y_pos in 1:y_steps) {
+      row <- ''
+      for (x_pos in 1:x_steps) {
+         if (complex_plane[[x_pos]][[y_pos]][[5]]) {
+            row <- paste(row, " ", sep="")
+         } else {
+            row <- paste(row, "*", sep="")
+         }
+      }
+      if (grepl('*', row, fixed = TRUE)) {
+         row <- paste(row, "\n", sep="")
+         cat(row)
+      }
+   }
+}
+
+args <- commandArgs(trailingOnly=TRUE)
+x_steps <- as.numeric(args[1])
+y_steps <- as.numeric(args[2])
+iterations <- as.numeric(args[3])
+
+mandelbrot(x_steps, y_steps, iterations)
+\end{lstlisting}
+Med R är det dock möjligt att göra en snyggare lösning utan att använda några extrabibliotek, eftersom R redan har stöd för både komplexa tal och matrisalgebra. I \verb+Mandelbrot_optimised.R+ finns den här mycket kompaktare lösningen:
+\begin{lstlisting}[language=R]
+#!/usr/bin/env Rscript
+
+mandelbrot <- function(x_steps, y_steps, iterations) {
+   
+   min_x <- -2.0
+   max_x <- 0.5
+   
+   min_y <- -1.2
+   max_y <- 1.2
+   
+   real_axis <- seq(from = min_x, to = max_x, length.out = x_steps)
+   imag_axis <- seq(from = min_y, to = max_y, length.out = y_steps)
+   complex_plane_temp <- complex(real = rep(real_axis, times = 1, each = y_steps),
+                            imag = rep(imag_axis, times = x_steps, each = 1))
+   complex_plane <- matrix(complex_plane_temp, x_steps, y_steps)
+   Z <- matrix(complex_plane_temp, x_steps, y_steps)
+   
+   for (i in 1:iterations) { 
+      Z <- Z^2 + complex_plane
+      diverged <- (abs(Z) > 4)
+     }
+   
+   for (y_pos in 1:y_steps) {
+      row <- ''
+      for (x_pos in 1:x_steps) {
+         if (diverged[y_pos, x_pos]) {
+            row <- paste(row, " ", sep="")
+         } else {
+            row <- paste(row, "*", sep="")
+         }
+      }
+      if (grepl('*', row, fixed = TRUE)) {
+         row <- paste(row, "\n", sep="")
+         cat(row)
+      }
+   }
+}
+
+args <- commandArgs(trailingOnly=TRUE)
+x_steps <- as.numeric(args[1])
+y_steps <- as.numeric(args[2])
+iterations <- as.numeric(args[3])
+
+mandelbrot(x_steps, y_steps, iterations)
+\end{lstlisting}
+Den är nästan identisk med den kompakta lösningen för Python. Den enda större skillnaden är att R inte har någon motsvarighet till funktionen \verb+meshgrid+ i \verb+numpy+, så vi har fåt använda \verb+rep+. (Om vi av någon anledning verkligen velat använda \verb+meshgrid+ så hade vi kunnat importera den från R-biblioteket \verb+pracma+.)
+
+
+\newpage
+\subsection{PHP}
+PHP är egentligen inte till för att man ska göra komplicerade beräkningar i det. Det är möjligt att det finns bibliotek som skulle snygga till koden, men jag nöjer mig med den här osnygga lösningen:
+\begin{lstlisting}[language=PHP]
+<?php
+
+function mandelbrot($x_steps, $y_steps, $iterations) {
+   
+   $min_x = -2.0;
+   $max_x = 0.5;
+   $span_x = $max_x - $min_x;
+   $step_x = $span_x / ($x_steps - 1);
+   
+   $min_y = -1.2;
+   $max_y = 1.2;
+   $span_y = $max_y - $min_y;
+   $step_y = $span_y / ($y_steps - 1);
+   
+   $complex_plane = array();
+   for ($x_pos = 0; $x_pos < $x_steps; $x_pos++) {
+      $re = $min_x + $x_pos * $step_x;
+      $column = array();
+      for ($y_pos = 0; $y_pos < $y_steps; $y_pos++) {
+         $im = $min_y + $y_pos * $step_y;
+         $column[] = array($re, $im, $re, $im, False);
+      }
+      $complex_plane[] = $column;
+   }
+   
+   for ($x_pos = 0; $x_pos < $x_steps; $x_pos++) {
+      for ($y_pos = 0; $y_pos < $y_steps; $y_pos++) {
+         for ($i = 0; $i < $iterations; $i++) { 
+            $diverged = $complex_plane[$x_pos][$y_pos][4];
+            
+            if (!$diverged) {
+               $re = $complex_plane[$x_pos][$y_pos][0];
+               $im = $complex_plane[$x_pos][$y_pos][1];
+               
+               $zi_re = $complex_plane[$x_pos][$y_pos][2];
+               $zi_im = $complex_plane[$x_pos][$y_pos][3];
+               
+               $zi1_re = $zi_re**2 - $zi_im**2 + $re;
+               $zi1_im = 2 * $zi_re * $zi_im + $im;
+               
+               $diverged = $zi1_re**2 + $zi1_im**2 > 4;
+               
+               $complex_plane[$x_pos][$y_pos][2] = $zi1_re;
+               $complex_plane[$x_pos][$y_pos][3] = $zi1_im;
+               $complex_plane[$x_pos][$y_pos][4] = $diverged;
+            }
+         }
+      }
+   }
+   
+   for ($y_pos = 0; $y_pos < $y_steps; $y_pos++) {
+      $row = '';
+      for ($x_pos = 0; $x_pos < $x_steps; $x_pos++) {
+         if ($complex_plane[$x_pos][$y_pos][4]) {
+            $row .= " ";
+         } else {
+            $row .= "*";
+         }
+      }
+      if (strpos($row, '*') !== false) {
+         $row .= "\n";
+         echo($row);
+      }
+   }
+}
+
+$x_steps = $argv[1];
+$y_steps = $argv[2];
+$iterations = $argv[3];
+
+mandelbrot($x_steps, $y_steps, $iterations);
+?>
+\end{lstlisting}
+
+
+\newpage
+\subsection{bash}
+Att implementera detta i bash lämnas som en övning åt läsaren. Det första steget blir att implementera flyttalsaritmetik, eftersom bash normalt bara befattar sig med heltal.
 
 \end{document}
