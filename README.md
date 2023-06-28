@@ -1,4 +1,6 @@
-For my new job at Karolinska Institutet, I will have to pick up a couple of different programming languages. This repository consists of exercises where I pick some very simple problem and then try to solve it in Python, R, PHP and bash. Sometimes I make multiple solutions in the same language, one sticking to constructs that have some reasonably close equivalent in the other languages, and some that make better use of the capabilities of that specific language. The latter solutions have `_optimised` in the filename if they use interesting constructs unique to that language, and `_using_bar` if they use some library `bar` in that language.
+When I started working at Karolinska Institutet, I had to pick up a couple of different programming languages. This repository consists of exercises where I pick some very simple problem and then try to solve it in Python, R, PHP and bash. Sometimes I make multiple solutions in the same language, one sticking to constructs that have some reasonably close equivalent in the other languages, and some that make better use of the capabilities of that specific language. The latter solutions have `_optimised` in the filename if they use interesting constructs unique to that language, and `_using_bar` if they use some library `bar` in that language.
+
+
 
 ### Contents of directory
 
